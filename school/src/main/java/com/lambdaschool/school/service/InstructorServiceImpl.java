@@ -13,6 +13,6 @@ public class InstructorServiceImpl implements InstructorService
 
     @Override
     public Instructor create(Instructor instructor) {
-        return instructrepos.save()
+        return instructrepos.save(instructor);
     }
 }
