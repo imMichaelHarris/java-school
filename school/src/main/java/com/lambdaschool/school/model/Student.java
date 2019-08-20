@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "student")
 public class Student
 {
-    @ApiModelProperty(name = "studid", value = "primary key for student", example = "1")
+    @ApiModelProperty(name = "studid", value = "primary key for student", required = true, example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long studid;
