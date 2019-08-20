@@ -6,15 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.Servlet;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/instructors")
@@ -22,7 +20,14 @@ public class InstructorController {
 
     @Autowired
     private InstructorService instructorService;
-    @PostMapping(value = "/create", consumes = {"applocatio/json"}, produces = {"appication/json"})
+
+    @GetMapping(value = "", produces = {"application/json"})
+    public ResponseEntity<?> getInstructors(){
+        ArrayList<Instructor> instructorList = instructorService.findAll();
+        return new ResponseEntity<>(instructorList, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/create", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> createInstructor(@Valid @RequestBody Instructor newInstructor){
         newInstructor = instructorService.create(newInstructor);
 
