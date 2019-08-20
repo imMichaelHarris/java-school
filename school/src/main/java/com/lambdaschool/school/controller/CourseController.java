@@ -1,8 +1,12 @@
 package com.lambdaschool.school.controller;
 
 import com.lambdaschool.school.model.Course;
+import com.lambdaschool.school.model.ErrorDetail;
 import com.lambdaschool.school.service.CourseService;
 import com.lambdaschool.school.view.CountStudentsInCourses;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,7 @@ public class CourseController
     @Autowired
     private CourseService courseService;
 
+    @ApiOperation(value = "Returns all courses in database", response = Course.class, responseContainer = "List")
     @GetMapping(value = "/courses", produces = {"application/json"})
     public ResponseEntity<?> listAllCourses(HttpServletRequest request)
     {
@@ -38,6 +43,11 @@ public class CourseController
         return new ResponseEntity<>(courseService.getCountStudentsInCourse(), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Deletes a course that matches the courseid")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Course deleted"),
+            @ApiResponse(code = 404, message = "Course not found", response = ErrorDetail.class)
+    })
     @DeleteMapping("/courses/{courseid}")
     public ResponseEntity<?> deleteCourseById(@PathVariable long courseid, HttpServletRequest request)
     {

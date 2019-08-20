@@ -44,24 +44,21 @@
         </rollingPolicy>
     </appender>
 
-<!--    <logger name="org.springframework" level="INFO" additivity="false">-->
-<!--        <appender-ref ref="STDOUT" />-->
-<!--    </logger>-->
+    <logger name="org.springframework" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
     <logger name="com.lambdaschool.school.controller" level="INFO" additivity="false">
     <appender-ref ref="STDOUT" />
     </logger>
     <logger name="org.apache.tomcat" level="OFF" additivity="false">
-        <appender-ref ref="STDOUT" />
         <appender-ref ref="TOMCAT" />
 
     </logger>
     <logger name="org.apache.coyote" level="OFF" additivity="false">
-        <appender-ref ref="STDOUT" />
         <appender-ref ref="TOMCAT" />
 
     </logger>
     <logger name="org.apache.catalina" level="OFF " additivity="false">
-        <appender-ref ref="STDOUT" />
         <appender-ref ref="TOMCAT" />
     </logger>
 </configuration>
