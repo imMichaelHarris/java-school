@@ -1,7 +1,11 @@
 package com.lambdaschool.school.controller;
 
+import com.lambdaschool.school.model.ErrorDetail;
 import com.lambdaschool.school.model.Instructor;
 import com.lambdaschool.school.service.InstructorService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +25,11 @@ public class InstructorController {
     @Autowired
     private InstructorService instructorService;
 
+    @ApiOperation(value = "Returns list of all instructors with their courses", response = Instructor.class, responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Instructors retrieved", response = Instructor.class),
+            @ApiResponse(code = 404, message = "Could not retrieve instructors", response = ErrorDetail.class)
+    })
     @GetMapping(value = "", produces = {"application/json"})
     public ResponseEntity<?> getInstructors(){
         ArrayList<Instructor> instructorList = instructorService.findAll();

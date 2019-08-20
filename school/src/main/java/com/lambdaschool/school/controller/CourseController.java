@@ -5,6 +5,7 @@ import com.lambdaschool.school.model.ErrorDetail;
 import com.lambdaschool.school.service.CourseService;
 import com.lambdaschool.school.view.CountStudentsInCourses;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
@@ -28,6 +29,10 @@ public class CourseController
     private CourseService courseService;
 
     @ApiOperation(value = "Returns all courses in database", response = Course.class, responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Courses retrieved", response = Course.class),
+            @ApiResponse(code = 404, message = "Not found", response = ErrorDetail.class)
+    })
     @GetMapping(value = "/courses", produces = {"application/json"})
     public ResponseEntity<?> listAllCourses(HttpServletRequest request)
     {
@@ -36,6 +41,11 @@ public class CourseController
         return new ResponseEntity<>(myCourses, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Returns course and amount of students currently in that course", response = Course.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Courses and student count retrieved.", response = Course.class),
+            @ApiResponse(code = 404, message = "Not Found", response = ErrorDetail.class)
+    })
     @GetMapping(value = "/studcount", produces = {"application/json"})
     public ResponseEntity<?> getCountStudentsInCourses(HttpServletRequest request)
     {
@@ -49,7 +59,10 @@ public class CourseController
             @ApiResponse(code = 404, message = "Course not found", response = ErrorDetail.class)
     })
     @DeleteMapping("/courses/{courseid}")
-    public ResponseEntity<?> deleteCourseById(@PathVariable long courseid, HttpServletRequest request)
+    public ResponseEntity<?> deleteCourseById(
+            @ApiParam(value = "Course Id", required = true, example = "2")
+            @PathVariable
+                    long courseid, HttpServletRequest request)
     {
         logger.info(request.getMethod().toUpperCase() + " " + request.getRequestURL() + "accessed at info level");
         courseService.delete(courseid);
