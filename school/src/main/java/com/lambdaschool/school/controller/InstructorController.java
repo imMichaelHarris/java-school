@@ -36,6 +36,11 @@ public class InstructorController {
         return new ResponseEntity<>(instructorList, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Creates a new instructor", notes = "The newly created instructor id will be sent in the location header", response = void.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Instructor created", response = void.class),
+            @ApiResponse(code = 500, message = "Error creating instructor", response = ErrorDetail.class)
+    })
     @PostMapping(value = "/create", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> createInstructor(@Valid @RequestBody Instructor newInstructor){
         newInstructor = instructorService.create(newInstructor);

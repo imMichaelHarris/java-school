@@ -1,7 +1,11 @@
 package com.lambdaschool.school.controller;
 
+import com.lambdaschool.school.model.ErrorDetail;
 import com.lambdaschool.school.model.Student;
 import com.lambdaschool.school.service.StudentService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,11 @@ public class StudentController
 
     // Please note there is no way to add students to course yet!
 
+    @ApiOperation(value = "Returns list of all students", response = Student.class, responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Students retrieved", response = Student.class),
+            @ApiResponse(code = 404, message = "Could not retrieve students", response = ErrorDetail.class)
+    })
     @GetMapping(value = "/students", produces = {"application/json"})
     public ResponseEntity<?> listAllStudents(HttpServletRequest request)
     {

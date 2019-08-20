@@ -21,8 +21,8 @@ public class Swagger2Config
     {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors
-                        .basePackage("com.lambdaschool.school"))
+                .apis(RequestHandlerSelectors.any())
+//                        .basePackage("com.lambdaschool.school"))
 //                .paths(PathSelectors.regex("/.*"))
                 .paths(PathSelectors.any())
                 .build()
