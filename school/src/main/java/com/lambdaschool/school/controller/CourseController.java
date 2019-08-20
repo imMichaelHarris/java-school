@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +36,12 @@ public class CourseController
             @ApiResponse(code = 404, message = "Not found", response = ErrorDetail.class)
     })
     @GetMapping(value = "/courses", produces = {"application/json"})
-    public ResponseEntity<?> listAllCourses(HttpServletRequest request)
+    public ResponseEntity<?> listAllCourses(
+            @PageableDefault(page=0, size = 2)
+            Pageable pageable, HttpServletRequest request)
     {
         logger.info(request.getMethod().toUpperCase() + " " + request.getRequestURL() + "accessed at info level");
-        ArrayList<Course> myCourses = courseService.findAll();
+        ArrayList<Course> myCourses = courseService.findAll(pageable);
         return new ResponseEntity<>(myCourses, HttpStatus.OK);
     }
 
