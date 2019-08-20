@@ -46,6 +46,11 @@ public class StudentController
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Return student associated with the student id", response = Student.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Student retrived", response = Student.class),
+            @ApiResponse(code = 404, message = "Could not find student", response = ErrorDetail.class)
+    })
     @GetMapping(value = "/Student/{StudentId}",
                 produces = {"application/json"})
     public ResponseEntity<?> getStudentById(
